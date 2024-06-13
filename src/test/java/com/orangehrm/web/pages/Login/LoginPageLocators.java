@@ -35,5 +35,5 @@ public class LoginPageLocators {
     public WebElement loginButton;
 
     @FindBy(xpath = "//p[@class='oxd-text oxd-text--p orangehrm-login-forgot-header']")
-    public WebElement forgotPasswordText;
+    public WebElement forgotPasswordLink;
 }
