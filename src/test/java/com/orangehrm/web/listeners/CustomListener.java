@@ -15,13 +15,13 @@ public class CustomListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext context) {
-        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + "\\src\\test\\resources\\extent-report.html");
+        ExtentSparkReporter sparkReporter = new ExtentSparkReporter(System.getProperty("user.dir") + "\\src\\test\\resources\\reports\\extent-report.html");
 
         sparkReporter.config().setTheme(Theme.DARK);
         sparkReporter.config().setReportName("Report Name");
         sparkReporter.config().setDocumentTitle("Document Title");
 
-        ExtentSparkReporter failedReport = new ExtentSparkReporter(System.getProperty("user.dir") + "\\src\\test\\resources\\failed-report.html");
+        ExtentSparkReporter failedReport = new ExtentSparkReporter(System.getProperty("user.dir") + "\\src\\test\\resources\\reports\\failed-report.html");
         failedReport.filter().statusFilter().as(new Status[]{Status.FAIL});
         failedReport.config().setTheme(Theme.DARK);
         failedReport.config().setReportName("Failed Cases");

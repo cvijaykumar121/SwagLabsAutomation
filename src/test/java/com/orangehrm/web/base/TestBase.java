@@ -1,6 +1,6 @@
 package com.orangehrm.web.base;
 
-import com.orangehrm.web.pages.HomePage.HomePage;
+//import com.orangehrm.web.pages.HomePage.HomePage;
 import com.orangehrm.web.utilities.ExtentManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -23,7 +23,7 @@ public class TestBase {
     public static Properties OR = new Properties();
     public static FileInputStream fis;
     public static JavascriptExecutor js;
-    public HomePage homePage;
+//    public HomePage homePage;
 
     @BeforeMethod
     public void setUp() throws IOException {
@@ -51,7 +51,7 @@ public class TestBase {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        homePage = new HomePage(driver);
+//        homePage = new HomePage(driver);
     }
 
     public void logPass(String message, boolean takeScreenshot) {
@@ -90,20 +90,57 @@ public class TestBase {
         }
     }
 
+    public void waitForElementToBeVisible(WebElement element, int timeoutInSeconds, String message) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+            wait.until(ExpectedConditions.visibilityOf(element));
+            logPass(message, true);
+        } catch (TimeoutException e) {
+            logFail("Timeout: Element is not visible within the specified time.\n" + e.getMessage(), true);
+        } catch (NoSuchElementException e) {
+            logFail("Error: Element not found in the DOM.\n" + e.getMessage(), true);
+        } catch (StaleElementReferenceException e) {
+            logFail("Error: Element is no longer attached to the DOM.\n" + e.getMessage(), true);
+        } catch (ElementNotInteractableException e) {
+            logFail("Error: Element is present but not interactable.\n" + e.getMessage(), true);
+        } catch (WebDriverException e) {
+            logFail("WebDriver error: \n" + e.getMessage(), true);
+        }
+    }
+
+
     public void waitForElementToBeClickable(WebElement element, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
         try {
             wait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException e) {
-            Assert.fail("Timeout: Element is not visible within the specified time.", e);
+            logFail("Timeout: Element is not visible within the specified time.\n" + e.getMessage(), true);
         } catch (NoSuchElementException e) {
-            Assert.fail("Error: Element not found in the DOM.", e);
+            logFail("Error: Element not found in the DOM.\n" + e.getMessage(), true);
         } catch (StaleElementReferenceException e) {
-            Assert.fail("Error: Element is no longer attached to the DOM.", e);
+            logFail("Error: Element is no longer attached to the DOM.\n" + e.getMessage(), true);
         } catch (ElementNotInteractableException e) {
-            Assert.fail("Error: Element is present but not interactable.", e);
+            logFail("Error: Element is present but not interactable.\n" + e.getMessage(), true);
         } catch (WebDriverException e) {
-            Assert.fail("WebDriver error: " + e.getMessage(), e);
+            logFail("WebDriver error: \n" + e.getMessage(), true);
+        }
+    }
+
+    public void waitForElementToBeClickable(WebElement element, int timeoutInSeconds, String message) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(element));
+            logPass(message, true);
+        } catch (TimeoutException e) {
+            logFail("Timeout: Element is not visible within the specified time.\n" + e.getMessage(), true);
+        } catch (NoSuchElementException e) {
+            logFail("Error: Element not found in the DOM.\n" + e.getMessage(), true);
+        } catch (StaleElementReferenceException e) {
+            logFail("Error: Element is no longer attached to the DOM.\n" + e.getMessage(), true);
+        } catch (ElementNotInteractableException e) {
+            logFail("Error: Element is present but not interactable.\n" + e.getMessage(), true);
+        } catch (WebDriverException e) {
+            logFail("WebDriver error: \n" + e.getMessage(), true);
         }
     }
 
