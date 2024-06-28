@@ -2,12 +2,14 @@ package com.orangehrm.web.base;
 
 //import com.orangehrm.web.pages.HomePage.HomePage;
 import com.orangehrm.web.utilities.ExtentManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -26,7 +28,7 @@ public class TestBase {
 //    public HomePage homePage;
 
     @BeforeMethod
-    public void setUp() throws IOException {
+    public void setUp() throws IOException, InterruptedException {
 
         fis = new FileInputStream(
                 System.getProperty("user.dir") + "\\src\\test\\resources\\properties\\Config.properties");
@@ -41,16 +43,18 @@ public class TestBase {
                     System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\chromedriver.exe");
             driver = new ChromeDriver();
         } else if (config.getProperty("browser").equalsIgnoreCase("Internet Explorer")) {
-            System.setProperty("webdriver.ie.driver",
-                    System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\IEDriverServer.exe");
-            driver = new InternetExplorerDriver();
+            System.setProperty("webdriver.edge.driver",
+                    System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\msedgedriver.exe");
+            driver = new EdgeDriver();
+        } else if(config.getProperty("browser").equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            driver = new FirefoxDriver();
         }
         js = (JavascriptExecutor) driver;
 
         driver.get(config.getProperty("application_url"));
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
 //        homePage = new HomePage(driver);
     }
 
