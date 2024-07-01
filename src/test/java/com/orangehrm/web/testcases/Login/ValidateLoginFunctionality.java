@@ -13,6 +13,7 @@ public class ValidateLoginFunctionality extends TestBase {
     String invalidPassword;
     String caseSensitiveUsername;
     String caseSensitivePassword;
+    String usernameWithSpecialCharacters;
 
     @BeforeMethod
     public void setUpBeforeValidateLoginFunctionalityTests() {
@@ -22,6 +23,7 @@ public class ValidateLoginFunctionality extends TestBase {
         invalidPassword = config.getProperty("invalidPassword");
         caseSensitiveUsername = config.getProperty("caseSensitiveUsername");
         caseSensitivePassword = config.getProperty("caseSensitivePassword");
+        usernameWithSpecialCharacters = config.getProperty("usernameWithSpecialCharacters");
     }
 
     @Test(priority = 1)
@@ -126,5 +128,14 @@ public class ValidateLoginFunctionality extends TestBase {
         userMenu.clickOnLogoutMenuOption();
 
         loginPage.validatePresenceOfLoginPageHeader();
+    }
+
+    @Test(priority = 10)
+    public void Verify_login_with_special_characters_in_username() {
+        loginPage.validatePresenceOfLoginPageHeader();
+        loginPage.enterUsername(usernameWithSpecialCharacters);
+        loginPage.enterPassword(validPassword);
+        loginPage.clickOnLoginButton();
+        loginPage.validateInvalidCredentialsError();
     }
 }
