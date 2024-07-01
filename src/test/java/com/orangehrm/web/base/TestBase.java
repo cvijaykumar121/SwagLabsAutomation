@@ -1,6 +1,7 @@
 package com.orangehrm.web.base;
 
 //import com.orangehrm.web.pages.HomePage.HomePage;
+import com.orangehrm.web.pages.Login.LoginPage;
 import com.orangehrm.web.utilities.ExtentManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
@@ -25,7 +26,7 @@ public class TestBase {
     public static Properties OR = new Properties();
     public static FileInputStream fis;
     public static JavascriptExecutor js;
-//    public HomePage homePage;
+    public LoginPage loginPage;
 
     @BeforeMethod
     public void setUp() throws IOException, InterruptedException {
@@ -55,7 +56,7 @@ public class TestBase {
         driver.get(config.getProperty("application_url"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-//        homePage = new HomePage(driver);
+        loginPage = new LoginPage(driver);
     }
 
     public void logPass(String message, boolean takeScreenshot) {

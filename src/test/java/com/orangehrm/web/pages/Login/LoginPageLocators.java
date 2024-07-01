@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class LoginPageLocators {
     public LoginPageLocators(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -36,4 +38,13 @@ public class LoginPageLocators {
 
     @FindBy(xpath = "//p[@class='oxd-text oxd-text--p orangehrm-login-forgot-header']")
     public WebElement forgotPasswordLink;
+
+    @FindBy(xpath = "(//*[@class='oxd-text oxd-text--p orangehrm-copyright'])[1]")
+    public WebElement copyrightText1;
+
+    @FindBy(xpath = "(//*[@class='oxd-text oxd-text--p orangehrm-copyright'])[2]")
+    public WebElement copyrightText2;
+
+    @FindBy(xpath = "//div[@class='orangehrm-login-footer-sm']/*")
+    public List<WebElement> loginFooterElements;
 }
