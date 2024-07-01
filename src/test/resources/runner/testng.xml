@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
+<suite name="Regression">
 
     <listeners>
         <listener class-name="com.orangehrm.web.listeners.CustomListener"/>
@@ -8,7 +8,7 @@
 
     <test verbose="2" preserve-order="true" name="TestSuite">
         <classes>
-            <class name="com.orangehrm.web.testcases.Login.ValidatePresenceOfAllElementsInLoginPage"/>
+            <class name="com.orangehrm.web.testcases.Login.ValidateLoginFunctionality"/>
         </classes>
     </test>
 </suite>

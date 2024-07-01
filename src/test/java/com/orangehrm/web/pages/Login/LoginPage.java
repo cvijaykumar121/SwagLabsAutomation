@@ -18,6 +18,7 @@ public class LoginPage extends TestBase {
     public void validatePresenceOfLoginPageHeader() {
         WebElement loginPageHeader = loginPageLocators.loginHeader;
         waitForElementToBeVisible(loginPageHeader, 20, "Validated Login Page header");
+        validateText(loginPageHeader, "Login", "Login Page Header Text validated successfully", 5);
     }
 
     public void validatePresenceOfUsernameInputHeader() {
@@ -35,14 +36,31 @@ public class LoginPage extends TestBase {
         waitForElementToBeVisible(usernameInput, 20, "Validated username input field");
     }
 
+    public void enterUsername(String username) {
+        validatePresenceOfUsernameInputField();
+        WebElement usernameInput = loginPageLocators.usernameTextBox;
+        sendKeys(usernameInput, username, "Username entered successfully", 5);
+    }
+
     public void validatePresenceOfPasswordInputField() {
         WebElement passwordInput = loginPageLocators.passwordInputText;
         waitForElementToBeVisible(passwordInput, 20, "Validated password input field");
     }
 
+    public void enterPassword(String password) {
+        validatePresenceOfPasswordInputField();
+        WebElement passwordInput = loginPageLocators.passwordTextBox;
+        sendKeys(passwordInput, password, "Password entered successfully", 5);
+    }
+
     public void validatePresenceOfLoginButton() {
         WebElement loginButton = loginPageLocators.loginButton;
         waitForElementToBeVisible(loginButton, 20, "Validated login button successfully");
+    }
+
+    public void clickOnLoginButton() {
+        validatePresenceOfLoginButton();
+        clickElement(loginPageLocators.loginButton, "Clicked on Login button", true, 5);
     }
 
     public void validatePresenceOfForgotPasswordLink() {
@@ -56,5 +74,10 @@ public class LoginPage extends TestBase {
     public void validatePresenceOfFooterElements() {
         List<WebElement> footerElements = loginPageLocators.loginFooterElements;
         System.out.println("Size of all footer elements: " + footerElements.size());
+    }
+
+    public void clickOnForgotPasswordLink() {
+        validatePresenceOfForgotPasswordLink();
+        clickElement(loginPageLocators.forgotPasswordLink, "Clicked on Forgot Password button", true, 5);
     }
 }

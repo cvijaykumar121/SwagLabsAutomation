@@ -5,6 +5,7 @@ import com.orangehrm.web.pages.Login.LoginPage;
 import com.orangehrm.web.utilities.ExtentManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,7 +30,9 @@ public class TestBase {
     public LoginPage loginPage;
 
     @BeforeMethod
-    public void setUp() throws IOException, InterruptedException {
+    public void setUp() throws IOException {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
 
         fis = new FileInputStream(
                 System.getProperty("user.dir") + "\\src\\test\\resources\\properties\\Config.properties");
@@ -43,7 +46,7 @@ public class TestBase {
             System.setProperty("webdriver.chrome.driver",
                     System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\chromedriver.exe");
             driver = new ChromeDriver();
-        } else if (config.getProperty("browser").equalsIgnoreCase("Internet Explorer")) {
+        } else if (config.getProperty("browser").equalsIgnoreCase("Edge")) {
             System.setProperty("webdriver.edge.driver",
                     System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\msedgedriver.exe");
             driver = new EdgeDriver();
@@ -183,7 +186,7 @@ public class TestBase {
         }
     }
 
-    public void sendKeys(WebElement element, String data, String message, int timeOut) throws InterruptedException {
+    public void sendKeys(WebElement element, String data, String message, int timeOut) {
         waitForElementToBeClickable(element, timeOut);
         try {
             element.sendKeys(data);
