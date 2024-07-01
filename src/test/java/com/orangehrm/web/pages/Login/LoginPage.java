@@ -80,4 +80,12 @@ public class LoginPage extends TestBase {
         validatePresenceOfForgotPasswordLink();
         clickElement(loginPageLocators.forgotPasswordLink, "Clicked on Forgot Password button", true, 5);
     }
+
+    public void validateInvalidCredentialsError() {
+        validateText(loginPageLocators.invalidCredentialsErrorMessage, "Invalid credentials", "Validated Invalid credentials error message successfully", 15);
+    }
+
+    public void validateRequiredMessageError() {
+        validateText(loginPageLocators.requiredErrorMessage, "Required", "Validated Required error message successfully", 15);
+    }
 }

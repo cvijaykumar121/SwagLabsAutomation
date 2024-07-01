@@ -47,4 +47,10 @@ public class LoginPageLocators {
 
     @FindBy(xpath = "//div[@class='orangehrm-login-footer-sm']/*")
     public List<WebElement> loginFooterElements;
+
+    @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-alert-content-text']")
+    public WebElement invalidCredentialsErrorMessage;
+
+    @FindBy(xpath = "//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")
+    public WebElement requiredErrorMessage;
 }

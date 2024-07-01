@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -30,27 +31,27 @@ public class TestBase {
     public LoginPage loginPage;
 
     @BeforeMethod
-    public void setUp() throws IOException {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
+    @Parameters({"browser"})
+    public void setUp(String browser) throws IOException {
+        String currentDirectory = System.getProperty("user.dir");
+        String configPropertyFilePath = currentDirectory + "\\src\\test\\resources\\properties\\Config.properties";
+        String ORPropertyFilePath = currentDirectory + "\\src\\test\\resources\\properties\\OR.properties";
+        String chromeDriverPath = currentDirectory + "\\src\\test\\resources\\executables\\chromedriver.exe";
+        String edgeDriverPath = currentDirectory + "\\src\\test\\resources\\executables\\msedgedriver.exe";
 
-        fis = new FileInputStream(
-                System.getProperty("user.dir") + "\\src\\test\\resources\\properties\\Config.properties");
+        fis = new FileInputStream(configPropertyFilePath);
         config.load(fis);
 
-        fis = new FileInputStream(
-                System.getProperty("user.dir") + "\\src\\test\\resources\\properties\\OR.properties");
+        fis = new FileInputStream(ORPropertyFilePath);
         OR.load(fis);
 
-        if (config.getProperty("browser").equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver",
-                    System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\chromedriver.exe");
+        if (browser.equalsIgnoreCase("chrome")) {
+            System.setProperty("webdriver.chrome.driver", chromeDriverPath);
             driver = new ChromeDriver();
-        } else if (config.getProperty("browser").equalsIgnoreCase("Edge")) {
-            System.setProperty("webdriver.edge.driver",
-                    System.getProperty("user.dir") + "\\src\\test\\resources\\executables\\msedgedriver.exe");
+        } else if (browser.equalsIgnoreCase("Edge")) {
+            System.setProperty("webdriver.edge.driver", edgeDriverPath);
             driver = new EdgeDriver();
-        } else if(config.getProperty("browser").equalsIgnoreCase("firefox")) {
+        } else if(browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver();
         }
