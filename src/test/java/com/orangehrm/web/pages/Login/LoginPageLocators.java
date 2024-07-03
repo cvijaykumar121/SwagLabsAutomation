@@ -53,4 +53,7 @@ public class LoginPageLocators {
 
     @FindBy(xpath = "//span[@class='oxd-text oxd-text--span oxd-input-field-error-message oxd-input-group__message']")
     public WebElement requiredErrorMessage;
+
+    @FindBy(xpath = "//h6[text()='Dashboard']")
+    public WebElement dashboardPageHeader;
 }

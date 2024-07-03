@@ -3,28 +3,9 @@ package com.orangehrm.web.testcases.Login;
 import com.orangehrm.web.base.TestBase;
 import com.orangehrm.web.pages.Dashboard.DashboardPage;
 import com.orangehrm.web.pages.UserMenu.UserMenu;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class ValidateLoginFunctionality extends TestBase {
-    String validUsername;
-    String validPassword;
-    String invalidUsername;
-    String invalidPassword;
-    String caseSensitiveUsername;
-    String caseSensitivePassword;
-    String usernameWithSpecialCharacters;
-
-    @BeforeMethod
-    public void setUpBeforeValidateLoginFunctionalityTests() {
-        validUsername = config.getProperty("validUsername");
-        validPassword = config.getProperty("validPassword");
-        invalidUsername = config.getProperty("invalidUsername");
-        invalidPassword = config.getProperty("invalidPassword");
-        caseSensitiveUsername = config.getProperty("caseSensitiveUsername");
-        caseSensitivePassword = config.getProperty("caseSensitivePassword");
-        usernameWithSpecialCharacters = config.getProperty("usernameWithSpecialCharacters");
-    }
 
     @Test(priority = 1)
     public void verify_Login_With_Valid_Credentials() {
@@ -33,6 +14,7 @@ public class ValidateLoginFunctionality extends TestBase {
         loginPage.enterUsername(validUsername);
         loginPage.enterPassword(validPassword);
         loginPage.clickOnLoginButton();
+        loginPage.acceptAlert();
         dashboardPage.validateDashboardPageHeader();
     }
 

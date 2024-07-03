@@ -1,9 +1,10 @@
 package com.orangehrm.web.pages.Login;
 
 import com.orangehrm.web.base.TestBase;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.time.Duration;
 import java.util.List;
 
 public class LoginPage extends TestBase {
@@ -87,5 +88,34 @@ public class LoginPage extends TestBase {
 
     public void validateRequiredMessageError() {
         validateText(loginPageLocators.requiredErrorMessage, "Required", "Validated Required error message successfully", 15);
+    }
+
+    public void validateDashboardPageHeader() {
+        WebElement dashboardPageHeader = loginPageLocators.dashboardPageHeader;
+        waitForElementToBeVisible(dashboardPageHeader, 20, "Validated Login Page header");
+        validateText(dashboardPageHeader, "Dashboard", "Dashboard Page Header Text validated successfully", 5);
+    }
+
+    public void acceptAlert() {
+        // Check for the presence of an alert
+        try {
+            waitForAlertToBePresent(5, "Alert displayed");
+            Alert alert = driver.switchTo().alert();
+            // Accept the alert
+            alert.accept();
+            logInfo("Alert accepted.", true);
+        } catch (NoAlertPresentException e) {
+            logInfo("No alert present.", true);
+        } catch (TimeoutException e) {
+            logInfo("No alert present within the specified timeout.", true);
+        }
+    }
+
+    public void loginToPage(String validUsername, String validPassword) {
+        validatePresenceOfLoginPageHeader();
+        enterUsername(validUsername);
+        enterPassword(validPassword);
+        clickOnLoginButton();
+        validateDashboardPageHeader();
     }
 }

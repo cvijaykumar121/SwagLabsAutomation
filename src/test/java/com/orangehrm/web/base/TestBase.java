@@ -1,11 +1,9 @@
 package com.orangehrm.web.base;
 
-//import com.orangehrm.web.pages.HomePage.HomePage;
 import com.orangehrm.web.pages.Login.LoginPage;
 import com.orangehrm.web.utilities.ExtentManager;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -29,6 +27,13 @@ public class TestBase {
     public static FileInputStream fis;
     public static JavascriptExecutor js;
     public LoginPage loginPage;
+    public String validUsername;
+    public String validPassword;
+    public String invalidUsername;
+    public String invalidPassword;
+    public String caseSensitiveUsername;
+    public String caseSensitivePassword;
+    public String usernameWithSpecialCharacters;
 
     @BeforeMethod
     @Parameters({"browser"})
@@ -61,6 +66,14 @@ public class TestBase {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
         loginPage = new LoginPage(driver);
+
+        validUsername = config.getProperty("validUsername");
+        validPassword = config.getProperty("validPassword");
+        invalidUsername = config.getProperty("invalidUsername");
+        invalidPassword = config.getProperty("invalidPassword");
+        caseSensitiveUsername = config.getProperty("caseSensitiveUsername");
+        caseSensitivePassword = config.getProperty("caseSensitivePassword");
+        usernameWithSpecialCharacters = config.getProperty("usernameWithSpecialCharacters");
     }
 
     public void logPass(String message, boolean takeScreenshot) {
@@ -150,6 +163,18 @@ public class TestBase {
             logFail("Error: Element is present but not interactable.\n" + e.getMessage(), true);
         } catch (WebDriverException e) {
             logFail("WebDriver error: \n" + e.getMessage(), true);
+        }
+    }
+
+    public void waitForAlertToBePresent(int timeOut, String message) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+        try {
+            wait.withTimeout(Duration.ofSeconds(5)).until(ExpectedConditions.alertIsPresent());
+            logPass(message, true);
+        } catch (NoAlertPresentException e) {
+            logInfo("No alert present.", true);
+        } catch (TimeoutException e) {
+            logInfo("No alert present within the specified timeout.", true);
         }
     }
 
