@@ -2,7 +2,6 @@ package com.orangehrm.web.testcases.Admin.Job;
 
 import com.orangehrm.web.base.TestBase;
 import com.orangehrm.web.pages.Admin.Job.JobTitle.JobTitle;
-import com.orangehrm.web.pages.Login.LoginPage;
 import org.testng.annotations.Test;
 
 public class ValidatePresenceOfAllElementsInJobTitlePage extends TestBase {

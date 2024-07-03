@@ -118,4 +118,15 @@ public class LoginPage extends TestBase {
         clickOnLoginButton();
         validateDashboardPageHeader();
     }
+
+    public void validateAllElementsPresentInLoginPage() {
+        validatePresenceOfLoginPageHeader();
+        validatePresenceOfUsernameInputHeader();
+        validatePresenceOfUsernameInputField();
+        validatePresenceOfPasswordInputHeader();
+        validatePresenceOfPasswordInputField();
+        validatePresenceOfLoginButton();
+        validatePresenceOfForgotPasswordLink();
+        validatePresenceOfFooterElements();
+    }
 }

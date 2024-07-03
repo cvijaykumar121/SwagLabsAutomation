@@ -5,7 +5,7 @@
         <parameter name="browser" value="chrome"/>
 
         <classes>
-            <class name="com.orangehrm.web.testcases.Login.ValidateLoginFunctionality">
+            <class name="com.orangehrm.web.testcases.Login.LoginTests">
                 <methods>
                     <include name="verify_Login_With_Valid_Credentials" />
                 </methods>

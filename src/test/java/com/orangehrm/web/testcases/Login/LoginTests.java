@@ -5,7 +5,12 @@ import com.orangehrm.web.pages.Dashboard.DashboardPage;
 import com.orangehrm.web.pages.UserMenu.UserMenu;
 import org.testng.annotations.Test;
 
-public class ValidateLoginFunctionality extends TestBase {
+public class LoginTests extends TestBase {
+
+    @Test(priority = 1)
+    public void validatePresenceOfAllElementsInLoginPage() {
+        loginPage.validateAllElementsPresentInLoginPage();
+    }
 
     @Test(priority = 1)
     public void verify_Login_With_Valid_Credentials() {
