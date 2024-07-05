@@ -22,6 +22,4 @@ public class JobTitlesTests extends TestBase {
         jobTitle.click_on_Add_Button();
         jobTitle.validate_All_Elements_Present_In_Add_JobTitle_Page();
     }
-
-
 }

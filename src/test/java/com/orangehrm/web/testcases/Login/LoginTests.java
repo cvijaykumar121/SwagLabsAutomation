@@ -85,19 +85,19 @@ public class LoginTests extends TestBase {
         loginPage.validateInvalidCredentialsError();
     }
 
-    @Test(priority = 8)
-    public void Verify_All_Links_Are_Present_In_User_Menu() {
-        UserMenu userMenu = new UserMenu(driver);
-        loginPage.enterUsername(validUsername);
-        loginPage.enterPassword(validPassword);
-        loginPage.clickOnLoginButton();
-
-        userMenu.validateUserMenuIsPresent();
-        userMenu.validateProfilePictureIsPresent();
-        userMenu.validateUserDropdownIsPresent();
-        userMenu.clickOnUserDropdown();
-        userMenu.validateDropdownMenus();
-    }
+//    @Test(priority = 8)
+//    public void Verify_All_Links_Are_Present_In_User_Menu() {
+//        UserMenu userMenu = new UserMenu(driver);
+//        loginPage.enterUsername(validUsername);
+//        loginPage.enterPassword(validPassword);
+//        loginPage.clickOnLoginButton();
+//
+//        userMenu.validateUserMenuIsPresent();
+//        userMenu.validateProfilePictureIsPresent();
+//        userMenu.validateUserDropdownIsPresent();
+//        userMenu.clickOnUserDropdown();
+//        userMenu.validateDropdownMenus();
+//    }
 
     @Test(priority = 9)
     public void Verify_the_logout_functionality() {

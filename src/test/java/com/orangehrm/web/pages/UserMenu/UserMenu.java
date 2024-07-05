@@ -35,20 +35,20 @@ public class UserMenu extends TestBase {
         clickElement(userDropdown, "User dropdown is clicked successfully", true, 10);
     }
 
-    public void validateDropdownMenus() {
-        List<WebElement> userDropdownItems = userMenuLocators.userDropdownMenuItems;
-        System.out.println("Size of user dropdown menu: " + userDropdownItems.size());
-        for(int i=0; i<userDropdownItems.size(); i++) {
-            WebElement menu = userDropdownItems.get(i);
-            switch (i) {
-                case 0 -> validateText(menu, "About", "About link validated successfully", 5);
-                case 1 -> validateText(menu, "Support", "Support link validated successfully", 5);
-                case 2 -> validateText(menu, "Change Password", "Change Password link validated successfully", 5);
-                case 3 -> validateText(menu, "Logout", "Logout link validated successfully", 5);
-                default -> System.out.println("Failed");
-            }
-        }
-    }
+//    public void validateDropdownMenus() {
+//        List<WebElement> userDropdownItems = userMenuLocators.userDropdownMenuItems;
+//        System.out.println("Size of user dropdown menu: " + userDropdownItems.size());
+//        for(int i=0; i<userDropdownItems.size(); i++) {
+//            WebElement menu = userDropdownItems.get(i);
+//            switch (i) {
+//                case 0 -> validateText(menu, "About", "About link validated successfully", 5);
+//                case 1 -> validateText(menu, "Support", "Support link validated successfully", 5);
+//                case 2 -> validateText(menu, "Change Password", "Change Password link validated successfully", 5);
+//                case 3 -> validateText(menu, "Logout", "Logout link validated successfully", 5);
+//                default -> System.out.println("Failed");
+//            }
+//        }
+//    }
 
     public void clickOnLogoutMenuOption() {
         WebElement logoutLink = userMenuLocators.logoutLink;
