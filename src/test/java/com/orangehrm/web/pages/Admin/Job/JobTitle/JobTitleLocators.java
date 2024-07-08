@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class JobTitleLocators {
     public JobTitleLocators(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -40,13 +42,13 @@ public class JobTitleLocators {
     @FindBy(xpath = "//form[@class='oxd-form']/div[@class='oxd-form-row']//label[text()='Job Title']")
     public WebElement jobTitleInputHeader;
 
-    @FindBy(xpath = "//input[@class='oxd-input oxd-input--active']/../preceding-sibling::div[@class='oxd-input-group__label-wrapper']")
+    @FindBy(xpath = "//form[@class='oxd-form']/div[@class='oxd-form-row']//input[@class='oxd-input oxd-input--active']")
     public WebElement jobTitleInput;
 
     @FindBy(xpath = "//form[@class='oxd-form']/div[@class='oxd-form-row']//label[text()='Job Description']")
     public WebElement jobDescriptionInputHeader;
 
-    @FindBy(xpath = "//textarea[@class='oxd-textarea oxd-textarea--active oxd-textarea--resize-vertical' and @placeholder='Type description here']")
+    @FindBy(xpath = "(//form[@class='oxd-form']/div[@class='oxd-form-row']//textarea[@class='oxd-textarea oxd-textarea--active oxd-textarea--resize-vertical'])[1]")
     public WebElement jobDescriptionInput;
 
     @FindBy(xpath = "//form[@class='oxd-form']/div[@class='oxd-form-row']//label[text()='Job Specification']")
@@ -70,6 +72,30 @@ public class JobTitleLocators {
     @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--ghost' or text()='Cancel']")
     public WebElement cancelButton;
 
-    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--secondary orangehrm-left-space' or text()='Save']")
+    @FindBy(xpath = "//button[@type='submit']")
     public WebElement saveButton;
+
+    @FindBy(xpath = "//div[@class='oxd-table']")
+    public WebElement jobTitlesTable;
+
+    @FindBy(xpath = "(//div[@class='oxd-table-header-cell oxd-padding-cell oxd-table-th'])[1]")
+    public WebElement checkboxHeader;
+
+    @FindBy(xpath = "//div[@class='oxd-table']//div[@class='oxd-table-header-cell oxd-padding-cell oxd-table-th' and text()='Job Titles']")
+    public WebElement jobTitlesTableHeader;
+
+    @FindBy(xpath = "//div[@class='oxd-table']//div[@class='oxd-table-header-cell oxd-padding-cell oxd-table-th' and text()='Job Description']")
+    public WebElement jobDescriptionTableHeader;
+
+    @FindBy(xpath = "//div[@class='oxd-table']//div[@class='oxd-table-header-cell oxd-padding-cell oxd-table-th' and text()='Actions']")
+    public WebElement actionsTableHeader;
+
+    @FindBy(xpath = "//div[@class='oxd-table-body']")
+    public WebElement jobTitlesBody;
+
+    @FindBy(xpath = "//div[@class='oxd-table-body']/*")
+    public List<WebElement> jobTitlesTableRows;
+
+    @FindBy(xpath = "//div[@class='oxd-form-row' and .//label[text()='Job Title']]//span[text()='Required']")
+    public WebElement jobTitleRequiredErrorMessage;
 }

@@ -11,7 +11,7 @@
 
         <classes>
             <class name="com.orangehrm.web.testcases.Login.LoginTests"/>
-            <class name="com.orangehrm.web.testcases.Admin.Job.JobTitlesTests"/>
+            <class name="com.orangehrm.web.testcases.AdminUser.Admin.Job.JobTitlesTests"/>
         </classes>
     </test>
 
@@ -20,6 +20,7 @@
 
 <!--        <classes>-->
 <!--            <class name="com.orangehrm.web.testcases.Login.LoginTests"/>-->
+<!--            <class name="com.orangehrm.web.testcases.AdminUser.Admin.Job.JobTitlesTests"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 
@@ -28,6 +29,7 @@
 
 <!--        <classes>-->
 <!--            <class name="com.orangehrm.web.testcases.Login.LoginTests"/>-->
+<!--            <class name="com.orangehrm.web.testcases.AdminUser.Admin.Job.JobTitlesTests"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 

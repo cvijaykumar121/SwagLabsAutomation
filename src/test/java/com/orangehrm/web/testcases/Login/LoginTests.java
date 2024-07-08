@@ -3,9 +3,24 @@ package com.orangehrm.web.testcases.Login;
 import com.orangehrm.web.base.TestBase;
 import com.orangehrm.web.pages.Dashboard.DashboardPage;
 import com.orangehrm.web.pages.UserMenu.UserMenu;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class LoginTests extends TestBase {
+    public String invalidUsername;
+    public String invalidPassword;
+    public String caseSensitiveUsername;
+    public String caseSensitivePassword;
+    public String usernameWithSpecialCharacters;
+
+    @BeforeMethod
+    public void setUpBeforeLoginTests() {
+        invalidUsername = config.getProperty("invalidUsername");
+        invalidPassword = config.getProperty("invalidPassword");
+        caseSensitiveUsername = config.getProperty("caseSensitiveUsername");
+        caseSensitivePassword = config.getProperty("caseSensitivePassword");
+        usernameWithSpecialCharacters = config.getProperty("usernameWithSpecialCharacters");
+    }
 
     @Test(priority = 1)
     public void validatePresenceOfAllElementsInLoginPage() {
@@ -16,8 +31,8 @@ public class LoginTests extends TestBase {
     public void verify_Login_With_Valid_Credentials() {
         DashboardPage dashboardPage = new DashboardPage(driver);
         loginPage.validatePresenceOfLoginPageHeader();
-        loginPage.enterUsername(validUsername);
-        loginPage.enterPassword(validPassword);
+        loginPage.enterUsername(validUsername_Admin);
+        loginPage.enterPassword(validPassword_Admin);
         loginPage.clickOnLoginButton();
         loginPage.acceptAlert();
         dashboardPage.validateDashboardPageHeader();
@@ -27,7 +42,7 @@ public class LoginTests extends TestBase {
     public void Verify_login_with_invalid_username() {
         loginPage.validatePresenceOfLoginPageHeader();
         loginPage.enterUsername(invalidUsername);
-        loginPage.enterPassword(validPassword);
+        loginPage.enterPassword(validPassword_Admin);
         loginPage.clickOnLoginButton();
         loginPage.validateInvalidCredentialsError();
     }
@@ -35,7 +50,7 @@ public class LoginTests extends TestBase {
     @Test(priority = 3)
     public void Verify_login_with_invalid_password() {
         loginPage.validatePresenceOfLoginPageHeader();
-        loginPage.enterUsername(validUsername);
+        loginPage.enterUsername(validUsername_Admin);
         loginPage.enterPassword(invalidPassword);
         loginPage.clickOnLoginButton();
         loginPage.validateInvalidCredentialsError();
@@ -53,7 +68,7 @@ public class LoginTests extends TestBase {
     @Test(priority = 5)
     public void Verify_login_with_blank_username() {
         loginPage.validatePresenceOfLoginPageHeader();
-        loginPage.enterPassword(validPassword);
+        loginPage.enterPassword(validPassword_Admin);
         loginPage.clickOnLoginButton();
         loginPage.validateRequiredMessageError();
     }
@@ -61,7 +76,7 @@ public class LoginTests extends TestBase {
     @Test(priority = 6)
     public void Verify_login_with_blank_password() {
         loginPage.validatePresenceOfLoginPageHeader();
-        loginPage.enterUsername(validUsername);
+        loginPage.enterUsername(validUsername_Admin);
         loginPage.clickOnLoginButton();
         loginPage.validateRequiredMessageError();
     }
@@ -71,7 +86,7 @@ public class LoginTests extends TestBase {
         DashboardPage dashboardPage = new DashboardPage(driver);
         loginPage.validatePresenceOfLoginPageHeader();
         loginPage.enterUsername(caseSensitiveUsername);
-        loginPage.enterPassword(validPassword);
+        loginPage.enterPassword(validPassword_Admin);
         loginPage.clickOnLoginButton();
         dashboardPage.validateDashboardPageHeader();
     }
@@ -79,7 +94,7 @@ public class LoginTests extends TestBase {
     @Test(priority = 7)
     public void Verify_case_sensitivity_of_the_password() {
         loginPage.validatePresenceOfLoginPageHeader();
-        loginPage.enterUsername(validUsername);
+        loginPage.enterUsername(validUsername_Admin);
         loginPage.enterPassword(caseSensitivePassword);
         loginPage.clickOnLoginButton();
         loginPage.validateInvalidCredentialsError();
@@ -105,8 +120,8 @@ public class LoginTests extends TestBase {
         UserMenu userMenu = new UserMenu(driver);
 
         loginPage.validatePresenceOfLoginPageHeader();
-        loginPage.enterUsername(validUsername);
-        loginPage.enterPassword(validPassword);
+        loginPage.enterUsername(validUsername_Admin);
+        loginPage.enterPassword(validPassword_Admin);
         loginPage.clickOnLoginButton();
 
         dashboardPage.validateDashboardPageHeader();
@@ -121,7 +136,7 @@ public class LoginTests extends TestBase {
     public void Verify_login_with_special_characters_in_username() {
         loginPage.validatePresenceOfLoginPageHeader();
         loginPage.enterUsername(usernameWithSpecialCharacters);
-        loginPage.enterPassword(validPassword);
+        loginPage.enterPassword(validPassword_Admin);
         loginPage.clickOnLoginButton();
         loginPage.validateInvalidCredentialsError();
     }

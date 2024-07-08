@@ -27,13 +27,8 @@ public class TestBase {
     public static FileInputStream fis;
     public static JavascriptExecutor js;
     public LoginPage loginPage;
-    public String validUsername;
-    public String validPassword;
-    public String invalidUsername;
-    public String invalidPassword;
-    public String caseSensitiveUsername;
-    public String caseSensitivePassword;
-    public String usernameWithSpecialCharacters;
+    public String validUsername_Admin;
+    public String validPassword_Admin;
 
     @BeforeMethod
     @Parameters({"browser"})
@@ -67,13 +62,8 @@ public class TestBase {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
         loginPage = new LoginPage(driver);
 
-        validUsername = config.getProperty("validUsername");
-        validPassword = config.getProperty("validPassword");
-        invalidUsername = config.getProperty("invalidUsername");
-        invalidPassword = config.getProperty("invalidPassword");
-        caseSensitiveUsername = config.getProperty("caseSensitiveUsername");
-        caseSensitivePassword = config.getProperty("caseSensitivePassword");
-        usernameWithSpecialCharacters = config.getProperty("usernameWithSpecialCharacters");
+        validUsername_Admin = config.getProperty("validUsername_Admin");
+        validPassword_Admin = config.getProperty("validPassword_Admin");
     }
 
     public void logPass(String message, boolean takeScreenshot) {
@@ -305,6 +295,13 @@ public class TestBase {
         } catch (WebDriverException e) {
             Assert.fail("WebDriver error: " + e.getMessage());
         }
+    }
+
+    public void highlightElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        // Change the element's border and background color to highlight it
+        js.executeScript("arguments[0].style.border='3px solid red'", element);
+        js.executeScript("arguments[0].style.backgroundColor='yellow'", element);
     }
 
     public static String captureScreenshot() {

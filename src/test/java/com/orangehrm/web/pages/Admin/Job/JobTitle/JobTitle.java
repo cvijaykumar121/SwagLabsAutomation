@@ -3,8 +3,14 @@ package com.orangehrm.web.pages.Admin.Job.JobTitle;
 import com.orangehrm.web.base.TestBase;
 import com.orangehrm.web.pages.Login.LoginPage;
 import com.orangehrm.web.pages.SideMenu.SideMenu;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class JobTitle extends TestBase {
     public WebDriver driver;
@@ -25,7 +31,7 @@ public class JobTitle extends TestBase {
         clickElement(jobNavButton, "Job Nav button clicked successfully", true, 5);
     }
 
-    public void clickOnJobNavOptions(String option) {
+    private void clickOnJobNavOptions(String option) {
         clickOnJobNavButton();
         if(option.equalsIgnoreCase("job titles")) {
             WebElement jobTitleOption = jobTitleLocators.jobTitlesLink;
@@ -47,76 +53,107 @@ public class JobTitle extends TestBase {
         }
     }
 
-    public void validate_Job_Title_Page_Header() {
+    private void validate_Job_Title_Page_Header() {
         WebElement jobTitleHeader = jobTitleLocators.jobTitlesHeader;
-        waitForElementToBeVisible(jobTitleHeader, 10);
-        validateText(jobTitleHeader, "Job Titles", "Validated Job Title successfully", 5);
+        waitForElementToBeVisible(jobTitleHeader, 20);
+        validateText(jobTitleHeader, "Job Titles", "Validated Job Title successfully", 10);
     }
 
-    public void validate_Job_Title_Input_Text_Is_Present() {
+    private void validate_Job_Title_Input_Text_Is_Present() {
         WebElement jobTitleInputText = jobTitleLocators.jobTitleInputHeader;
         waitForElementToBeVisible(jobTitleInputText, 10);
         validateText(jobTitleInputText, "Job Title", "Validated Job Title input header successfully", 5);
     }
 
-    public void validate_Job_Title_Input_Box_Is_Present() {
+    private WebElement validate_Job_Title_Input_Box_Is_Present() {
         WebElement jobTitleInput = jobTitleLocators.jobTitleInput;
         waitForElementToBeVisible(jobTitleInput, 10, "Validated Job Title Input Box successfully");
+        return jobTitleInput;
     }
 
-    public void validate_Job_Description_Input_Text_Is_Present() {
+    private void enterJobTitle(String jobTitle) {
+        WebElement jobTitleInputBox = validate_Job_Title_Input_Box_Is_Present();
+        sendKeys(jobTitleInputBox, jobTitle, "Successfully entered " + jobTitle + " into text box", 10);
+    }
+
+
+
+    private void validate_Job_Description_Input_Text_Is_Present() {
         WebElement jobDescriptionInputHeader = jobTitleLocators.jobDescriptionInputHeader;
         waitForElementToBeVisible(jobDescriptionInputHeader, 10);
         validateText(jobDescriptionInputHeader, "Job Description", "Validated Job Description input header successfully", 5);
     }
 
-    public void validate_Job_Title_Description_Box_Is_Present() {
+    private WebElement validate_Job_Title_Description_Box_Is_Present() {
         WebElement jobTitleDescription = jobTitleLocators.jobDescriptionInput;
         waitForElementToBeVisible(jobTitleDescription, 10, "Validated Job Title description box successfully");
+        return jobTitleDescription;
+    }
+
+    private void enter_Job_Description(String jobDescription) {
+        WebElement jobDescriptionTextBox = validate_Job_Title_Description_Box_Is_Present();
+        sendKeys(jobDescriptionTextBox, jobDescription, "Successfully entered " + jobDescription + " into job description text box", 10);
     }
 
 
-    public void validate_Job_Specification_Input_Text_Is_Present() {
+    private void validate_Job_Specification_Input_Text_Is_Present() {
         WebElement jobSpecificationInputHeader = jobTitleLocators.jobSpecificationInputHeader;
         waitForElementToBeVisible(jobSpecificationInputHeader, 10);
         validateText(jobSpecificationInputHeader, "Job Specification", "Validated Job Specification input header successfully", 5);
     }
 
-    public void validate_Job_Specification_Browse_Button_Is_Present() {
+    private void validate_Job_Specification_Browse_Button_Is_Present() {
         WebElement jobSpecificationBrowseButton = jobTitleLocators.jobSpecificationBrowseButton;
         waitForElementToBeVisible(jobSpecificationBrowseButton, 10, "Job specification browse button is visible");
     }
 
 
-    public void validate_Job_Specification_Hint_Text_Is_Present() {
+    private void validate_Job_Specification_Hint_Text_Is_Present() {
         WebElement jobSpecificationHintText = jobTitleLocators.jobSpecificationHint;
         waitForElementToBeVisible(jobSpecificationHintText, 10);
         validateText(jobSpecificationHintText, "Accepts up to 1MB", "Validated Job Specification hint successfully", 5);
     }
 
-    public void validate_Note_Input_Text_Is_Present() {
+    private void validate_Note_Input_Text_Is_Present() {
         WebElement noteInputHeader = jobTitleLocators.noteInputHeader;
         waitForElementToBeVisible(noteInputHeader, 10);
         validateText(noteInputHeader, "Note", "Validated Note input header successfully", 5);
     }
 
-    public void validate_Note_Input_Box_Is_Present() {
+    private WebElement validate_Note_Input_Box_Is_Present() {
         WebElement noteInputBox = jobTitleLocators.addNoteTextBox;
         waitForElementToBeVisible(noteInputBox, 10, "Validated add note input box successfully");
+        return noteInputBox;
+    }
+
+    private void enterNote(String note) {
+        WebElement noteInputBox = validate_Note_Input_Box_Is_Present();
+        sendKeys(noteInputBox, note, "Entered note into note input box", 10);
     }
 
 
-    public void validate_Cancel_Button_Is_Present() {
+    private void validate_Cancel_Button_Is_Present() {
         WebElement cancelButton = jobTitleLocators.cancelButton;
         waitForElementToBeClickable(cancelButton, 10, "Validated cancel button successfully");
     }
 
-    public void validate_Save_Button_Is_Present() {
+    private WebElement validate_Save_Button_Is_Present() {
         WebElement saveButton = jobTitleLocators.saveButton;
         waitForElementToBeClickable(saveButton, 10, "Validated Save button successfully");
+        return saveButton;
     }
 
-    public void validate_Required_Text_Is_Present_At_Bottom_Of_Page() {
+    public void click_On_Save_Button() {
+        WebElement saveButton = validate_Save_Button_Is_Present();
+        clickElement(saveButton, "Save button clicked successfully", true, 20);
+        try {
+            Thread.sleep(12000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void validate_Required_Text_Is_Present_At_Bottom_Of_Page() {
         WebElement requiredText = jobTitleLocators.requiredText;
         waitForElementToBeVisible(requiredText, 10);
 //        validateText(requiredText, " * Required", "Validated required text successfully", 5);
@@ -139,9 +176,126 @@ public class JobTitle extends TestBase {
         validateText(requiredText, "Add Job Title", "Validated Add Job Title header successfully", 5);
     }
 
+    private void validateTableIsPresent() {
+        WebElement jobTitleTable = jobTitleLocators.jobTitlesTable;
+        waitForElementToBeVisible(jobTitleTable, 10, "Job Title table is visible");
+    }
+
+    private void validateTableHeaders() {
+        WebElement checkboxHeader = jobTitleLocators.checkboxHeader;
+        WebElement jobTitlesHeader = jobTitleLocators.jobTitlesHeader;
+        WebElement jobDescriptionHeader = jobTitleLocators.jobDescriptionTableHeader;
+        WebElement actionsHeader = jobTitleLocators.actionsTableHeader;
+
+        waitForElementToBeClickable(checkboxHeader, 10, "Checkbox header is visible and clickable");
+        waitForElementToBeVisible(jobTitlesHeader, 10, "Job Titles Header is visible");
+        waitForElementToBeVisible(jobDescriptionHeader, 10, "Job Description header is visible");
+        waitForElementToBeVisible(actionsHeader, 10, "Actions header is visible");
+    }
+
+    private void validateAllRowsInJobTitlesTable() {
+        List<WebElement> rows = jobTitleLocators.jobTitlesTableRows;
+        System.out.println("Rows in table: " + rows.size());
+        for(int i=0; i<rows.size(); i++) {
+            WebElement currentRow = rows.get(i);
+            WebElement checkbox = currentRow.findElement(By.xpath("//*[div[@class='oxd-checkbox-wrapper']]"));
+            highlightElement(checkbox);
+            checkbox.click();
+            WebElement jobTitleData = currentRow.findElement((By.xpath("//div[@class='oxd-table-cell oxd-padding-cell'][2]/div")));
+            getTextFromElement(jobTitleData, 10);
+            System.out.println("Job Title Data: " + jobTitleData);
+        }
+    }
+
+    private void uploadFile() {
+        WebElement browseButton = jobTitleLocators.jobSpecificationBrowseButton;
+        clickElement(browseButton, "Browse button clicked", true, 10);
+        try {
+            Robot robot = new Robot();
+            robot.delay(3000);
+
+            StringSelection selection = new StringSelection("D:\\Project\\File Upload.pdf");
+            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, null);
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.delay(1000);
+            robot.keyPress(KeyEvent.VK_V);
+            robot.delay(1000);
+
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.delay(1000);
+            robot.keyRelease(KeyEvent.VK_V);
+            robot.delay(1000);
+
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.delay(1000);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+            robot.delay(1000);
+
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void validate_JobTitle_Present_In_JobTitles_Page(String jobTitle, String jobDescription) {
+        List<WebElement> jobTitleRows = jobTitleLocators.jobTitlesTableRows;
+        for(WebElement currentRow: jobTitleRows) {
+            WebElement jobTitleElement = currentRow.findElement(By.xpath("//div[text()='Automation Testing']"));
+            if(getTextFromElement(jobTitleElement, 10).equalsIgnoreCase(jobTitle)) {
+                logInfo("Successfully validated job title in the table", true);
+                WebElement jobDescriptionElement = currentRow.findElement(By.xpath("//div[span[text()='This is the job for Automation testing']]"));
+                System.out.println("Job Description Text From table: " + jobDescriptionElement.getText());
+                validateText(jobDescriptionElement, jobDescription, "Job Description in table validated successfully", 10);
+                WebElement trashIcon = currentRow.findElement(By.xpath("//i[@class='oxd-icon bi-trash']"));
+                waitForElementToBeVisible(trashIcon, 10, "Delete icon is visible");
+                WebElement editIcon = currentRow.findElement(By.xpath("(//div[@class='oxd-table-body']/*)[1]//i[@class='oxd-icon bi-pencil-fill']"));
+                waitForElementToBeVisible(editIcon, 10, "Edit icon is visible");
+                break;
+            }
+        }
+    }
+
+    public void validate_JobTitle_Present_In_JobTitles_Page(String jobTitle) {
+        List<WebElement> jobTitleRows = jobTitleLocators.jobTitlesTableRows;
+        for(WebElement currentRow: jobTitleRows) {
+            WebElement jobTitleElement = currentRow.findElement(By.xpath("//div[text()='Automation Testing']"));
+            if(getTextFromElement(jobTitleElement, 10).equalsIgnoreCase(jobTitle)) {
+                logInfo("Successfully validated job title in the table", true);
+                WebElement trashIcon = currentRow.findElement(By.xpath("//i[@class='oxd-icon bi-trash']"));
+                waitForElementToBeVisible(trashIcon, 10, "Delete icon is visible");
+                WebElement editIcon = currentRow.findElement(By.xpath("(//div[@class='oxd-table-body']/*)[1]//i[@class='oxd-icon bi-pencil-fill']"));
+                waitForElementToBeVisible(editIcon, 10, "Edit icon is visible");
+                break;
+            }
+        }
+    }
+
+    private void validateJobTitleRequiredErrorMessage(String fieldName) {
+        WebElement jobTitleRequiredErrorMessage = driver.findElement(By.xpath("//div[@class='oxd-form-row' and .//label[text()='" + fieldName + "']]//span[text()='Required']"));
+        waitForElementToBeVisible(jobTitleRequiredErrorMessage, 10, "Required error message in job title field is displayed correctly");
+    }
+
+
+/* *************************************************************************************************************************************************************************************************************
+                                        Actual Methods to be called from tests starts
+ *************************************************************************************************************************************************************************************************************
+*/
+
+    public void navigateToJobTitlesPage() {
+        sideMenu.clickOnAdminLink();
+        clickOnJobNavOptions("job titles");
+    }
+
     public void validateAllElementsPresentInJobTitlePage() {
         validate_Job_Title_Page_Header();
         validate_Add_Button();
+        validateTableIsPresent();
+        validateTableHeaders();
+//        validateAllRowsInJobTitlesTable();
     }
 
     public void validate_All_Elements_Present_In_Add_JobTitle_Page() {
@@ -160,9 +314,23 @@ public class JobTitle extends TestBase {
         validate_Required_Text_Is_Present_At_Bottom_Of_Page();
     }
 
+    public void Add_Job_Title_By_Entering_All_Valid_Data_In_All_Fields(String jobTitle, String jobDescription, String note) {
+        enterJobTitle(jobTitle);
+        enter_Job_Description(jobDescription);
+        enterNote(note);
+        uploadFile();
+        click_On_Save_Button();
+        validate_Job_Title_Page_Header();
+    }
 
-    public void navigateToJobTitlesPage() {
-        sideMenu.clickOnAdminLink();
-        clickOnJobNavOptions("job titles");
+    public void Add_Job_Title_By_Entering_Only_Required_Fields(String jobTitle) {
+        enterJobTitle(jobTitle);
+        click_On_Save_Button();
+        validate_Job_Title_Page_Header();
+    }
+
+    public void validate_Error_Message_Displayed_While_Fields_Are_Empty() {
+        click_On_Save_Button();
+        validateJobTitleRequiredErrorMessage("Job Title");
     }
 }
