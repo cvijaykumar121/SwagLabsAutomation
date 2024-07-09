@@ -98,4 +98,16 @@ public class JobTitleLocators {
 
     @FindBy(xpath = "//div[@class='oxd-form-row' and .//label[text()='Job Title']]//span[text()='Required']")
     public WebElement jobTitleRequiredErrorMessage;
+
+    @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-text--card-title']")
+    public WebElement deleteJobTitlePopUpHeader;
+
+    @FindBy(xpath = "//p[@class='oxd-text oxd-text--p oxd-text--card-body']")
+    public WebElement deleteJobTitlePopUpBody;
+
+    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--label-danger orangehrm-button-margin']")
+    public WebElement yesDeleteJobTitleButton;
+
+    @FindBy(xpath = "//button[@class='oxd-button oxd-button--medium oxd-button--text orangehrm-button-margin']")
+    public WebElement noCancelJobTitleButton;
 }

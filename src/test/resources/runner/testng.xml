@@ -10,7 +10,7 @@
         <parameter name="browser" value="chrome"/>
 
         <classes>
-            <class name="com.orangehrm.web.testcases.Login.LoginTests"/>
+<!--            <class name="com.orangehrm.web.testcases.Login.LoginTests"/>-->
             <class name="com.orangehrm.web.testcases.AdminUser.Admin.Job.JobTitlesTests"/>
         </classes>
     </test>

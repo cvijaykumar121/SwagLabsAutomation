@@ -55,6 +55,11 @@ public class JobTitle extends TestBase {
 
     private void validate_Job_Title_Page_Header() {
         WebElement jobTitleHeader = jobTitleLocators.jobTitlesHeader;
+        try {
+            Thread.sleep(15000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         waitForElementToBeVisible(jobTitleHeader, 20);
         validateText(jobTitleHeader, "Job Titles", "Validated Job Title successfully", 10);
     }
@@ -279,6 +284,46 @@ public class JobTitle extends TestBase {
         waitForElementToBeVisible(jobTitleRequiredErrorMessage, 10, "Required error message in job title field is displayed correctly");
     }
 
+    public void click_On_Trash_Icon_In_Job_Titles_Table(String jobTitle) {
+        List<WebElement> jobTitleRows = jobTitleLocators.jobTitlesTableRows;
+        for(WebElement currentRow: jobTitleRows) {
+            WebElement jobTitleElement = currentRow.findElement(By.xpath("//div[text()='Automation Testing']"));
+            if(getTextFromElement(jobTitleElement, 10).equalsIgnoreCase(jobTitle)) {
+                logInfo("Successfully validated job title in the table", true);
+                WebElement trashIcon = currentRow.findElement(By.xpath("//i[@class='oxd-icon bi-trash']"));
+                waitForElementToBeVisible(trashIcon, 10, "Delete icon is visible");
+                clickElement(trashIcon, "Trash Icon for the " + jobTitle + " is clicked successfully", true, 10);
+                break;
+            }
+        }
+    }
+
+    private void handle_Delete_JobTitle_Pop_Up(boolean clickOnDelete) {
+        validateText(jobTitleLocators.deleteJobTitlePopUpHeader, "Are you Sure?",
+                "Delete Job Title pop up header validated successfully", 10);
+        validateText(jobTitleLocators.deleteJobTitlePopUpBody,
+                "The selected record will be permanently deleted. Are you sure you want to continue?",
+                "Delete Job Title pop up message body validated successfully", 10);
+        if(clickOnDelete) {
+            click_On_Yes_Delete_Button();
+        } else {
+            click_No_Cancel_Button();
+        }
+    }
+
+    private void click_On_Yes_Delete_Button() {
+        WebElement yesDeleteButton = jobTitleLocators.yesDeleteJobTitleButton;
+        waitForElementToBeVisible(yesDeleteButton, 10, "Yes Delete button is displayed successfully");
+        clickElement(yesDeleteButton, "Yes, Delete button is clicked successfully", true, 10);
+    }
+
+    private void click_No_Cancel_Button() {
+        WebElement noCancelButton = jobTitleLocators.noCancelJobTitleButton;
+        waitForElementToBeVisible(noCancelButton, 10, "No Cancel button is displayed successfully");
+        clickElement(noCancelButton, "No Cancel button is clicked successfully", true, 10);
+    }
+
+
 
 /* *************************************************************************************************************************************************************************************************************
                                         Actual Methods to be called from tests starts
@@ -333,4 +378,18 @@ public class JobTitle extends TestBase {
         click_On_Save_Button();
         validateJobTitleRequiredErrorMessage("Job Title");
     }
+
+    public void delete_Job_Title_Using_Trash_Icon_In_Job_Titles_Page(String validJobTitle) {
+        click_On_Trash_Icon_In_Job_Titles_Table(validJobTitle);
+        handle_Delete_JobTitle_Pop_Up(true);
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+//    public void validate_Deleted_Job_Title_Is_Not_Present_In_Job_Titles_Table(String validJobTitle) {
+//
+//    }
 }
