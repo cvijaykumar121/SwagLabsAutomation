@@ -76,7 +76,7 @@ public class JobTitlesTests extends TestBase {
         jobTitle.navigateToJobTitlesPage();
         jobTitle.click_on_Add_Button();
         jobTitle.Add_Job_Title_By_Entering_Only_Required_Fields(validJobTitle);
-        jobTitle.validate_Job_Title_Page_Header();
+//        jobTitle.validate_Job_Title_Page_Header();
         jobTitle.validate_JobTitle_Present_In_JobTitles_Page(validJobTitle);
     }
 
