@@ -53,7 +53,7 @@ public class JobTitle extends TestBase {
         }
     }
 
-    private void validate_Job_Title_Page_Header() {
+    public void validate_Job_Title_Page_Header() {
         WebElement jobTitleHeader = jobTitleLocators.jobTitlesHeader;
         try {
             Thread.sleep(15000);
@@ -323,6 +323,11 @@ public class JobTitle extends TestBase {
         clickElement(noCancelButton, "No Cancel button is clicked successfully", true, 10);
     }
 
+    public void validateJobTitleAlreadyExistsErrorMessage(String fieldName) {
+        WebElement jobTitleRequiredErrorMessage = driver.findElement(By.xpath("//div[@class='oxd-form-row' and .//label[text()='" + fieldName + "']]//span[text()='Already exists']"));
+        waitForElementToBeVisible(jobTitleRequiredErrorMessage, 10, "Already exists error message in job title field is displayed correctly");
+    }
+
 
 
 /* *************************************************************************************************************************************************************************************************************
@@ -365,13 +370,11 @@ public class JobTitle extends TestBase {
         enterNote(note);
         uploadFile();
         click_On_Save_Button();
-        validate_Job_Title_Page_Header();
     }
 
     public void Add_Job_Title_By_Entering_Only_Required_Fields(String jobTitle) {
         enterJobTitle(jobTitle);
         click_On_Save_Button();
-        validate_Job_Title_Page_Header();
     }
 
     public void validate_Error_Message_Displayed_While_Fields_Are_Empty() {
