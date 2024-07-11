@@ -1,22 +1,16 @@
 package com.orangehrm.web.base;
 
-import com.orangehrm.web.pages.Login.LoginPage;
+import com.orangehrm.web.StepDefinitions.Hooks;
 import com.orangehrm.web.utilities.ExtentManager;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -26,44 +20,15 @@ public class TestBase {
     public static Properties OR = new Properties();
     public static FileInputStream fis;
     public static JavascriptExecutor js;
-    public LoginPage loginPage;
-    public String validUsername_Admin;
-    public String validPassword_Admin;
 
-    @BeforeMethod
+    @BeforeSuite
     @Parameters({"browser"})
-    public void setUp(String browser) throws IOException {
-        String currentDirectory = System.getProperty("user.dir");
-        String configPropertyFilePath = currentDirectory + "\\src\\test\\resources\\properties\\Config.properties";
-        String ORPropertyFilePath = currentDirectory + "\\src\\test\\resources\\properties\\OR.properties";
-        String chromeDriverPath = currentDirectory + "\\src\\test\\resources\\executables\\chromedriver.exe";
-        String edgeDriverPath = currentDirectory + "\\src\\test\\resources\\executables\\msedgedriver.exe";
-
-        fis = new FileInputStream(configPropertyFilePath);
-        config.load(fis);
-
-        fis = new FileInputStream(ORPropertyFilePath);
-        OR.load(fis);
-
-        if (browser.equalsIgnoreCase("chrome")) {
-            System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-            driver = new ChromeDriver();
-        } else if (browser.equalsIgnoreCase("Edge")) {
-            System.setProperty("webdriver.edge.driver", edgeDriverPath);
-            driver = new EdgeDriver();
-        } else if(browser.equalsIgnoreCase("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
-        }
-        js = (JavascriptExecutor) driver;
-
-        driver.get(config.getProperty("application_url"));
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-        loginPage = new LoginPage(driver);
-
-        validUsername_Admin = config.getProperty("validUsername_Admin");
-        validPassword_Admin = config.getProperty("validPassword_Admin");
+    public void setUp(String browser) {
+        fis = Hooks.fis;
+        config = Hooks.config;
+        OR = Hooks.OR;
+        js = Hooks.js;
+        System.out.println("Current browser executing: " + browser);
     }
 
     public void logPass(String message, boolean takeScreenshot) {
@@ -87,7 +52,7 @@ public class TestBase {
 
     public void waitForElementToBeVisible(WebElement element, int timeoutInSeconds) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+            WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(timeoutInSeconds));
             wait.until(ExpectedConditions.visibilityOf(element));
         } catch (TimeoutException e) {
             Assert.fail("Timeout: Element is not visible within the specified time.", e);
@@ -104,7 +69,7 @@ public class TestBase {
 
     public void waitForElementToBeVisible(WebElement element, int timeoutInSeconds, String message) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+            WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(timeoutInSeconds));
             wait.until(ExpectedConditions.visibilityOf(element));
             logPass(message, true);
         } catch (TimeoutException e) {
@@ -122,7 +87,7 @@ public class TestBase {
 
 
     public void waitForElementToBeClickable(WebElement element, int timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(timeoutInSeconds));
         try {
             wait.until(ExpectedConditions.elementToBeClickable(element));
         } catch (TimeoutException e) {
@@ -139,7 +104,7 @@ public class TestBase {
     }
 
     public void waitForElementToBeClickable(WebElement element, int timeoutInSeconds, String message) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(timeoutInSeconds));
         try {
             wait.until(ExpectedConditions.elementToBeClickable(element));
             logPass(message, true);
@@ -157,7 +122,7 @@ public class TestBase {
     }
 
     public void waitForAlertToBePresent(int timeOut, String message) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(timeOut));
         try {
             wait.withTimeout(Duration.ofSeconds(5)).until(ExpectedConditions.alertIsPresent());
             logPass(message, true);
@@ -169,7 +134,7 @@ public class TestBase {
     }
 
     public void waitForFrameAndSwitchToIt(WebElement frameElement, int timeOut) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeOut));
+        WebDriverWait wait = new WebDriverWait(Hooks.driver, Duration.ofSeconds(timeOut));
         try {
             wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameElement));
             System.out.println("Switched to frame successfully");
@@ -269,7 +234,7 @@ public class TestBase {
 
     public void switchToDefaultContent() {
         try {
-            driver.switchTo().defaultContent();
+            Hooks.driver.switchTo().defaultContent();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -298,14 +263,14 @@ public class TestBase {
     }
 
     public void highlightElement(WebElement element) {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js = (JavascriptExecutor) Hooks.driver;
         // Change the element's border and background color to highlight it
         js.executeScript("arguments[0].style.border='3px solid red'", element);
         js.executeScript("arguments[0].style.backgroundColor='yellow'", element);
     }
 
     public static String captureScreenshot() {
-        TakesScreenshot ts = (TakesScreenshot) driver;
+        TakesScreenshot ts = (TakesScreenshot) Hooks.driver;
         return ts.getScreenshotAs(OutputType.BASE64);
     }
 
@@ -322,20 +287,20 @@ public class TestBase {
 //        return destination;
 //    }
 
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit(); // Quits the WebDriver session, closing all browser windows
-            driver = null; // Sets driver to null to avoid using a terminated instance
-        }
-    }
-
-//    @AfterSuite
-//    public void openExtentReport() {
-//        try {
-//            Desktop.getDesktop().browse(new File(System.getProperty("user.dir") + "\\src\\test\\resources\\extent-report.html").toURI());
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
+//    @AfterMethod
+//    public void tearDown() {
+//        if (driver != null) {
+//            driver.quit(); // Quits the WebDriver session, closing all browser windows
+//            driver = null; // Sets driver to null to avoid using a terminated instance
 //        }
 //    }
+//
+////    @AfterSuite
+////    public void openExtentReport() {
+////        try {
+////            Desktop.getDesktop().browse(new File(System.getProperty("user.dir") + "\\src\\test\\resources\\extent-report.html").toURI());
+////        } catch (IOException e) {
+////            throw new RuntimeException(e);
+////        }
+////    }
 }
