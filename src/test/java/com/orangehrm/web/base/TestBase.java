@@ -1,24 +1,16 @@
 package com.orangehrm.web.base;
 
 import com.orangehrm.web.StepDefinitions.Hooks;
-import com.orangehrm.web.pages.Login.LoginPage;
 import com.orangehrm.web.utilities.ExtentManager;
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.*;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.Properties;
 
@@ -28,48 +20,15 @@ public class TestBase {
     public static Properties OR = new Properties();
     public static FileInputStream fis;
     public static JavascriptExecutor js;
-//    public LoginPage loginPage;
-//    public String validUsername_Admin;
-//    public String validPassword_Admin;
 
     @BeforeSuite
     @Parameters({"browser"})
-    public void setUp(String browser) throws IOException {
-//        String currentDirectory = System.getProperty("user.dir");
-//        String configPropertyFilePath = currentDirectory + "\\src\\test\\resources\\properties\\Config.properties";
-//        String ORPropertyFilePath = currentDirectory + "\\src\\test\\resources\\properties\\OR.properties";
-//        String chromeDriverPath = currentDirectory + "\\src\\test\\resources\\executables\\chromedriver.exe";
-//        String edgeDriverPath = currentDirectory + "\\src\\test\\resources\\executables\\msedgedriver.exe";
-//
-//        fis = new FileInputStream(configPropertyFilePath);
-//        config.load(fis);
-//
-//        fis = new FileInputStream(ORPropertyFilePath);
-//        OR.load(fis);
-//
-//        if (browser.equalsIgnoreCase("chrome")) {
-//            System.setProperty("webdriver.chrome.driver", chromeDriverPath);
-//            driver = new ChromeDriver();
-//        } else if (browser.equalsIgnoreCase("Edge")) {
-//            System.setProperty("webdriver.edge.driver", edgeDriverPath);
-//            driver = new EdgeDriver();
-//        } else if(browser.equalsIgnoreCase("firefox")) {
-//            WebDriverManager.firefoxdriver().setup();
-//            driver = new FirefoxDriver();
-//        }
-//        js = (JavascriptExecutor) driver;
-//
-//        driver.get(config.getProperty("application_url"));
-//        driver.manage().window().maximize();
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-//        loginPage = new LoginPage(driver);
-//
-//        validUsername_Admin = config.getProperty("validUsername_Admin");
-//        validPassword_Admin = config.getProperty("validPassword_Admin");
+    public void setUp(String browser) {
         fis = Hooks.fis;
         config = Hooks.config;
         OR = Hooks.OR;
         js = Hooks.js;
+        System.out.println("Current browser executing: " + browser);
     }
 
     public void logPass(String message, boolean takeScreenshot) {
