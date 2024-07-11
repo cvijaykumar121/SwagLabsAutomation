@@ -1,6 +1,4 @@
 package com.orangehrm.web.StepDefinitions;
-
-import com.orangehrm.web.pages.Login.LoginPage;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -22,9 +20,6 @@ public class Hooks {
     public static Properties OR = new Properties();
     public static FileInputStream fis;
     public static JavascriptExecutor js;
-    public LoginPage loginPage;
-    public String validUsername_Admin;
-    public String validPassword_Admin;
 
     @Before
     public void setUp() {
@@ -72,10 +67,6 @@ public class Hooks {
         driver.get(config.getProperty("application_url"));
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(40));
-        loginPage = new LoginPage(driver);
-
-        validUsername_Admin = config.getProperty("validUsername_Admin");
-        validPassword_Admin = config.getProperty("validPassword_Admin");
 
         System.out.println("Browser Launched");
 
